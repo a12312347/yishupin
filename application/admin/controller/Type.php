@@ -3,8 +3,8 @@
 namespace app\admin\controller;
 
 use app\common\controller\Backend;
+use fast\Tree;
 use think\Db;
-use fast\tree;
 /**
  * 作品分类管理
  *
@@ -31,6 +31,61 @@ class Type extends Backend
      * 因此在当前控制器中可不用编写增删改查的代码,除非需要自己控制这部分逻辑
      * 需要将application/admin/library/traits/Backend.php中对应的方法复制到当前控制器,然后进行修改
      */
+
+
+
+
+
+
+    /**
+     * 查看
+     */
+    public function index()
+    {
+        //当前是否为关联查询
+        $this->relationSearch = false;
+        //设置过滤方法
+        $this->request->filter(['strip_tags']);
+        if ($this->request->isAjax())
+        {
+            //如果发送的来源是Selectpage，则转发到Selectpage
+            if ($this->request->request('keyField'))
+            {
+                return $this->selectpage();
+            }
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams();
+            $total = $this->model
+                    
+                    ->where($where)
+
+                    ->order($sort, $order)
+                    ->count();
+
+            $list = $this->model
+                    
+                    ->where($where)
+
+                    ->order($sort, $order)
+                    ->limit(0, 0)
+                    ->select();
+
+            foreach ($list as $row) {
+                $row->visible(['id','name','image','pid','createtime','level']);
+                
+            }
+            $list = collection($list)->toArray();
+
+            $tree=Tree::instance();
+            $tree->init($list,'pid');
+            $list=$tree->getTreeList($tree->getTreeArray('0'),'name');
+
+            $result = array("total" => $total, "rows" => $list);
+
+            return json($result);
+        }
+        return $this->view->fetch();
+    }
+
 
 
     /**
@@ -65,6 +120,9 @@ class Type extends Backend
             if ($params) {
                 $params = $this->preExcludeFields($params);
                 $params['createtime']=datetime(time());
+                if(empty($params['pid']) || $params['pid']==0){
+                    $params['level']=1;
+                }
 
                 if ($this->dataLimit && $this->dataLimitFieldAutoFill) {
                     $params[$this->dataLimitField] = $this->auth->id;
@@ -102,65 +160,69 @@ class Type extends Backend
     }
 
 
+
     /*
      * 添加下级分类
-     * @params pid
      *
      * */
     public function add_down(){
+
         if($this->request->post()){
-            $params=$this->request->request('row/a');
-            $params['pid']=$this->request->get('pid');
+            $row=$this->request->get();
+            $params=$this->request->post('row/a');
+
+            $info=$this->model->get(['id'=>$row['pid']]);
+
+            if(empty($info)){
+                return $this->error('该分类不存在!');
+            }
+
+            $params['level']=$info['level']+1;
+
             $params['createtime']=datetime(time());
+            $params['pid']=$row['pid'];
+
             $res=$this->model->allowField(true)->save($params);
+
             if($res){
                 return $this->success('操作成功!');
-            }
+            }else{
                 return $this->error('操作失败!');
-        }
-        return $this->view->fetch();
-    }
-
-
-
-    /**
-     * 查看
-     */
-    public function index()
-    {
-        //设置过滤方法
-        $this->request->filter(['strip_tags']);
-        if ($this->request->isAjax()) {
-            //如果发送的来源是Selectpage，则转发到Selectpage
-            if ($this->request->request('keyField')) {
-                return $this->selectpage();
             }
-            list($where, $sort, $order, $offset, $limit) = $this->buildparams();
-            $total = $this->model
-                ->where($where)
-                ->order($sort, $order)
-                ->count();
-
-            $list = $this->model
-                ->where($where)
-                ->order($sort, $order)
-                ->limit($offset, $limit)
-                ->select();
-
-            $tree=Tree::instance();
-            $tree->init(collection($list)->toArray(),'pid');
-            $list=$tree->getTreeList($tree->getTreeArray(0),'name');
-            //$list = collection($list)->toArray();
-
-            /*树形数据*/
-
-
-
-            $result = array("total" => $total, "rows" => $list);
-
-            return json($result);
         }
         return $this->view->fetch();
     }
+
+
+    /*
+     * 添加细分类
+     *
+     * */
+    public function add_tiny(){
+        if($this->request->post()){
+            $row=$this->request->get();
+            $params=$this->request->post('row/a');
+
+            $info=$this->model->get(['id'=>$row['pid']]);
+
+            if(empty($info)){
+                return $this->error('该分类不存在!');
+            }
+            $params['pid']=$row['pid'];
+            $params['createtime']=datetime(time());
+            $params['level']=2;
+            $params['is_tiny']=10;
+
+            $res=$this->model->allowField(true)->save($params);
+
+            if($res){
+                return $this->success('操作成功!');
+            }else{
+                return $this->error('操作失败!');
+            }
+        }
+        return $this->view->fetch();
+    }
+
 
 }

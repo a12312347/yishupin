@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'Type_id'    => '主键id',
+    'Id'         => '主键id',
     'Name'       => '分类名称',
     'Image'      => '图片',
     'Pid'        => '上级分类id',

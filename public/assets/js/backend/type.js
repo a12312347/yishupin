@@ -7,7 +7,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 extend: {
                     index_url: 'type/index' + location.search,
                     add_url: 'type/add',
-                    add_down_url: 'type/add_down',
+                    add_down:'type/add_down',
+                    add_tiny:'type/add_tiny',
                     edit_url: 'type/edit',
                     del_url: 'type/del',
                     multi_url: 'type/multi',
@@ -20,13 +21,15 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格
             table.bootstrapTable({
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
-                pk: 'type_id',
-                sortName: 'type_id',
+                escape: false,
+                pagination: false,
+                pk: 'id',
+                sortName: 'id',
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'type_id', title: __('Type_id')},
-                        {field: 'name', title: __('Name')},
+                        {field: 'id', title: __('Id')},
+                        {field: 'name', title: __('Name'),align:'left'},
                         {field: 'image', title: __('Image'), events: Table.api.events.image, formatter: Table.api.formatter.image},
                         {field: 'pid', title: __('Pid')},
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange'},
@@ -35,8 +38,11 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 name:'add_down',
                                 title:'添加下级分类',
                                 icon:'fa fa-plus',
-                                classname:'btn-xs btn  btn-primary btn-dialog',
-                                url:'type/add_down?pid={row.type_id}'
+                                classname:'btn-xs btn btn-primary btn-dialog',
+                                url:'type/add_down?pid={row.id}',
+                                visible:function(row){
+                                    return row.level >=3 ?false:true;
+                                }
                             }
                         ]}
                     ]
@@ -50,6 +56,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             Controller.api.bindevent();
         },
         add_down: function () {
+            Controller.api.bindevent();
+        },
+        add_tiny: function () {
             Controller.api.bindevent();
         },
         edit: function () {
