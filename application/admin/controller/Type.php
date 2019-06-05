@@ -147,10 +147,11 @@ class Type extends Backend
                 ->limit($offset, $limit)
                 ->select();
 
-            $tree=Tree::instance();
-            $tree->init(collection($list)->toArray(),'pid');
-            $list=$tree->getTreeList($tree->getTreeArray(0),'name');
-            //$list = collection($list)->toArray();
+            //$tree=Tree::instance();
+            //$tree->init(collection($list)->toArray(),'pid');
+            //$list=$tree->getTreeList($tree->getTreeArray('type_id'),'name');
+            //dump($tree);exit;
+            $list = collection($list)->toArray();
 
             /*树形数据*/
 
