@@ -5,6 +5,7 @@ namespace app\admin\controller\general;
 use app\common\controller\Backend;
 use app\common\library\Email;
 use app\common\model\Config as ConfigModel;
+use think\Db;
 use think\Exception;
 
 /**
@@ -213,6 +214,48 @@ class Config extends Backend
         } else {
             $this->error($email->getError());
         }
+    }
+
+    /*
+     * 需求设置
+     *
+     *
+     * */
+    public function demandset(){
+        $row=$this->model->getGroupData('demandset');
+        if(empty($row)){
+            return $this->error('系统不存在!请联系开发解决!');
+        }
+
+        if($this->request->post()){
+            $params=$this->request->post('row/a');
+
+            Db::startTrans();
+            try{
+                foreach($params as $k=>$v){
+                    dump($k);
+                    dump($v);
+                    Db::table('fa_config')->where(['name'=>$k])->update(['value'=>json_encode($v)]);
+                }
+                Db::commit();
+                $res=1;
+            }catch(\Exception $e){
+                Db::rollback();
+                $errcode=$e->getMessage();
+                $res=0;
+            }
+            if($res==1){
+                return $this->success('操作成功!');
+            }else{
+                return $this->error('操作失败!errcode:'.$errcode);
+            }
+
+
+
+        }
+
+        $this->view->assign('row',$row);
+        return $this->view->fetch();
     }
 
 }

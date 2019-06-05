@@ -7,6 +7,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 extend: {
                     index_url: 'general/config/index',
                     add_url: 'general/config/add',
+                    demandset_url: 'general/config/demandset',
                     edit_url: 'general/config/edit',
                     del_url: 'general/config/del',
                     multi_url: 'general/config/multi',
@@ -90,6 +91,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             });
         },
         add: function () {
+            Controller.api.bindevent();
+        },
+        demandset: function () {
             Controller.api.bindevent();
         },
         edit: function () {

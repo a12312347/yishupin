@@ -3,27 +3,27 @@
 namespace app\admin\controller;
 
 use app\common\controller\Backend;
-use fast\Tree;
 use think\Db;
 /**
- * 作品分类管理
+ * 订单管理
  *
  * @icon fa fa-circle-o
  */
-class Type extends Backend
+class Order extends Backend
 {
     
     /**
-     * Type模型对象
-     * @var \app\common\model\Type
+     * Order模型对象
+     * @var \app\common\model\Order
      */
     protected $model = null;
 
     public function _initialize()
     {
         parent::_initialize();
-        $this->model = new \app\common\model\Type;
-
+        $this->model = new \app\common\model\Order;
+        $this->view->assign("payTypeList", $this->model->getPayTypeList());
+        $this->view->assign("statusList", $this->model->getStatusList());
     }
     
     /**
@@ -31,11 +31,7 @@ class Type extends Backend
      * 因此在当前控制器中可不用编写增删改查的代码,除非需要自己控制这部分逻辑
      * 需要将application/admin/library/traits/Backend.php中对应的方法复制到当前控制器,然后进行修改
      */
-
-
-
-
-
+    
 
     /**
      * 查看
@@ -43,7 +39,7 @@ class Type extends Backend
     public function index()
     {
         //当前是否为关联查询
-        $this->relationSearch = false;
+        $this->relationSearch = true;
         //设置过滤方法
         $this->request->filter(['strip_tags']);
         if ($this->request->isAjax())
@@ -55,37 +51,34 @@ class Type extends Backend
             }
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
             $total = $this->model
-                    
+                    ->with(['artist','goods','user'])
                     ->where($where)
-
                     ->order($sort, $order)
                     ->count();
 
             $list = $this->model
-                    
+                    ->with(['artist','goods','user'])
                     ->where($where)
-
                     ->order($sort, $order)
-                    ->limit(0, 0)
+                    ->limit($offset, $limit)
                     ->select();
 
             foreach ($list as $row) {
-                $row->visible(['id','name','image','pid','createtime','level']);
-                
+                $row->visible(['order_id','order_num','price','receive_name','receive_address','pay_type','out_trade_no','createtime','status','receive_mobile']);
+                $row->visible(['artist']);
+				$row->getRelation('artist')->visible(['name']);
+				$row->visible(['goods']);
+				$row->getRelation('goods')->visible(['title']);
+				$row->visible(['user']);
+				$row->getRelation('user')->visible(['avatar','mobile']);
             }
             $list = collection($list)->toArray();
-
-            $tree=Tree::instance();
-            $tree->init($list,'pid');
-            $list=$tree->getTreeList($tree->getTreeArray('0'),'name');
-
             $result = array("total" => $total, "rows" => $list);
 
             return json($result);
         }
         return $this->view->fetch();
     }
-
 
 
     /**
@@ -120,9 +113,6 @@ class Type extends Backend
             if ($params) {
                 $params = $this->preExcludeFields($params);
                 $params['createtime']=datetime(time());
-                if(empty($params['pid']) || $params['pid']==0){
-                    $params['level']=1;
-                }
 
                 if ($this->dataLimit && $this->dataLimitFieldAutoFill) {
                     $params[$this->dataLimitField] = $this->auth->id;
@@ -160,69 +150,25 @@ class Type extends Backend
     }
 
 
-
     /*
-     * 添加下级分类
+     * 确认发货
      *
      * */
-    public function add_down(){
+    public function complete(){
+        if($this->request->request()){
+            $params=$this->request->request();
 
-        if($this->request->post()){
-            $row=$this->request->get();
-            $params=$this->request->post('row/a');
-
-            $info=$this->model->get(['id'=>$row['pid']]);
-
-            if(empty($info)){
-                return $this->error('该分类不存在!');
+            $order=$this->model->get(['order_id'=>$params['order_id']]);
+            if($order['status']!=20){
+                return $this->error('订单未支付!');
             }
-
-            $params['level']=$info['level']+1;
-
-            $params['createtime']=datetime(time());
-            $params['pid']=$row['pid'];
-
-            $res=$this->model->allowField(true)->save($params);
-
+            $res=$this->model->where('order_id',$params['order_id'])->update(['status'=>30]);
             if($res){
-                return $this->success('操作成功!');
+                return $this->success('发货成功!');
             }else{
-                return $this->error('操作失败!');
+                return $this->error('发货失败!');
             }
         }
-        return $this->view->fetch();
     }
-
-
-    /*
-     * 添加细分类
-     *
-     * */
-    public function add_tiny(){
-        if($this->request->post()){
-            $row=$this->request->get();
-            $params=$this->request->post('row/a');
-
-
-
-            if(empty($info)){
-                return $this->error('该分类不存在!');
-            }
-            $params['pid']=$row['pid'];
-            $params['createtime']=datetime(time());
-            $params['level']=2;
-            $params['is_tiny']=10;
-
-            $res=$this->model->allowField(true)->save($params);
-
-            if($res){
-                return $this->success('操作成功!');
-            }else{
-                return $this->error('操作失败!');
-            }
-        }
-        return $this->view->fetch();
-    }
-
 
 }

@@ -163,4 +163,17 @@ class Config extends Model
         return $upload;
     }
 
+
+    /*
+     * 获取分类数据
+     * @param string $type
+     *
+     * */
+    public function getGroupData($type){
+        $list=$this->where(['group'=>$type])->select();
+        $list=collection($list)->toArray();
+        $list=config_to_array($list);
+        return $list;
+    }
+
 }

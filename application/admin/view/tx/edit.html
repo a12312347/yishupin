@@ -1,0 +1,40 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Artist_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-artist_id" data-rule="required" data-source="artist/index"  data-primary-key="artist_id" class="form-control selectpage" name="row[artist_id]" type="text" value="{$row.artist_id|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Tx_price')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-tx_price" data-rule="required" class="form-control" step="0.01" name="row[tx_price]" type="number" value="{$row.tx_price|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Sj_price')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-sj_price" data-rule="required" class="form-control" step="0.01" name="row[sj_price]" type="number" value="{$row.sj_price|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            {foreach name="statusList" item="vo"}
+            <label for="row[status]-{$key}"><input id="row[status]-{$key}" name="row[status]" type="radio" value="{$key}" {in name="key" value="$row.status"}checked{/in} /> {$vo}</label> 
+            {/foreach}
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>
