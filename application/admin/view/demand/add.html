@@ -1,0 +1,58 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('User_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-user_id" data-rule="required" data-source="user/index" data-primary-key="user_id" data-field="mobile" class="form-control selectpage" name="row[user_id]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Details')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-details" data-rule="required" class="form-control " rows="5" name="row[details]" cols="50"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mobile')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-mobile" data-rule="required" class="form-control" name="row[mobile]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Artist_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-artist_id" data-rule="" data-source="artist/index" data-primary-key="artist_id"  class="form-control selectpage" name="row[artist_id]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Type')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-type" data-rule="required" data-source="demand/typeList" data-params='{"custom[type]":"demandset1"}' data-primary-key="name" class="form-control selectpage" name="row[type]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Category')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-category" data-rule="required" data-source="demand/typeList" data-params='{"custom[type]":"demandset2"}' data-primary-key="name" class="form-control selectpage" name="row[category]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Style')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-style" data-rule="required" data-source="demand/typeList" data-params='{"custom[type]":"demandset3"}' data-primary-key="name" class="form-control selectpage" name="row[style]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Technique')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-technique" data-rule="required" data-source="demand/typeList" data-params='{"custom[type]":"demandset4"}' data-primary-key="name" class="form-control selectpage" name="row[technique]" type="text">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

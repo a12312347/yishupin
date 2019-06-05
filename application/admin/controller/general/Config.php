@@ -223,6 +223,7 @@ class Config extends Backend
      * */
     public function demandset(){
         $row=$this->model->getGroupData('demandset');
+
         if(empty($row)){
             return $this->error('系统不存在!请联系开发解决!');
         }
@@ -233,9 +234,7 @@ class Config extends Backend
             Db::startTrans();
             try{
                 foreach($params as $k=>$v){
-                    dump($k);
-                    dump($v);
-                    Db::table('fa_config')->where(['name'=>$k])->update(['value'=>json_encode($v)]);
+                    Db::table('fa_config')->where(['name'=>$k])->update(['value'=>$v]);
                 }
                 Db::commit();
                 $res=1;

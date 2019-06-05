@@ -4,25 +4,24 @@ namespace app\admin\controller;
 
 use app\common\controller\Backend;
 use think\Db;
-use fast\Random;
 /**
- * 艺术家管理
+ * 需求管理
  *
  * @icon fa fa-circle-o
  */
-class Artist extends Backend
+class Demand extends Backend
 {
     
     /**
-     * Artist模型对象
-     * @var \app\common\model\Artist
+     * Demand模型对象
+     * @var \app\common\model\Demand
      */
     protected $model = null;
 
     public function _initialize()
     {
         parent::_initialize();
-        $this->model = new \app\common\model\Artist;
+        $this->model = new \app\common\model\Demand;
 
     }
     
@@ -39,7 +38,7 @@ class Artist extends Backend
     public function index()
     {
         //当前是否为关联查询
-        $this->relationSearch = false;
+        $this->relationSearch = true;
         //设置过滤方法
         $this->request->filter(['strip_tags']);
         if ($this->request->isAjax())
@@ -51,21 +50,22 @@ class Artist extends Backend
             }
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
             $total = $this->model
-                    
+                    ->with(['user','artist'])
                     ->where($where)
                     ->order($sort, $order)
                     ->count();
 
             $list = $this->model
-                    
+                    ->with(['user','artist'])
                     ->where($where)
                     ->order($sort, $order)
                     ->limit($offset, $limit)
                     ->select();
 
             foreach ($list as $row) {
-                $row->visible(['artist_id','name','avatar','wallet','createtime']);
                 
+                $row->getRelation('user')->visible(['avatar']);
+				$row->getRelation('artist')->visible(['name','avatar']);
             }
             $list = collection($list)->toArray();
             $result = array("total" => $total, "rows" => $list);
@@ -145,69 +145,28 @@ class Artist extends Backend
     }
 
 
-
-
     /*
-     * 添加管理员账号
+     * 一级分类列表
      *
      * */
-    public function add_account(){
-        $artist_id=$this->request->request('artist_id');
-        if($this->request->post()){
-            $params=$this->request->post('row/a');
-            $admin=model('Admin')->get(['artist_id'=>$artist_id]);
+    public function typeList(){
+        if($this->request->isAjax()){
+            $params=$this->request->request('custom/a');
+            $demandset=model('Config')->getGroupData('demandset');
 
-            if(empty($admin)){
-                //添加账号
-                $params['artist_id']=$artist_id;
-                $params['salt'] = Random::alnum();
-                $params['email']=$params['username'].'@qq.com';
-                $params['nickname']=$params['username'];
-                $params['password'] = md5(md5($params['password']) . $params['salt']);
-                $params['avatar'] = '/assets/img/avatar.png'; //设置新管理员默认头像。
-
-                $res=model('Admin')->validate('Admin.add')->save($params);
-                if ($res === false)
-                {
-                    $this->error(model('Admin')->getError());
-                }
-                //艺术家分后台权限组id
-                $group_id=7;
-                model('AuthGroupAccess')->save(['uid'=>model('Admin')->getLastInsID(),'group_id'=>$group_id]);
-                return $this->success('添加成功!');
-
-            }else{
-                //修改账号
-                if ($params['password'])
-                {
-                    $params['salt'] = Random::alnum();
-                    $params['password'] = md5(md5($params['password']) . $params['salt']);
-                }
-                else
-                {
-                    unset($params['password'], $params['salt']);
-                }
-                $params['nickname']=$admin['nickname'];
-                $params['email']=$admin['email'];
-                $params['id']=$admin['id'];
-                //这里需要针对username和email做唯一验证
-                $adminValidate = \think\Loader::validate('Admin');
-                $adminValidate->rule([
-                    'username' => 'require|max:50|unique:admin,username,' . $admin['id'],
-                    'email'    => 'require|email|unique:admin,email,' . $admin['id']
-                ]);
-                $result = model('Admin')->validate('Admin.edit')->save($params);
-                if ($result === false)
-                {
-                    $this->error(model('Admin')->getError());
-                }
-                $this->success('修改成功!');
+            if(empty($demandset[$params['type']])){
+                return $this->error('无效参数值!');
             }
-        }
-        $row=model('Admin')->get(['artist_id'=>$artist_id]);
-        $this->view->assign('row',$row);
 
-        return $this->view->fetch();
+            $rows=count(json_decode($demandset[$params['type']]));
+            $list=json_decode($demandset[$params['type']]);
+
+            $newlist=[];
+            foreach($list as $k=>$v){
+                $newlist[$k]['name']=$v;
+            }
+            return ['total'=>$rows,'list'=>$newlist];
+        }
     }
 
 

@@ -10,13 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-06-05 18:33:34
+Date: 2019-06-05 23:09:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for fa_ad
+-- Table structure for `fa_ad`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_ad`;
 CREATE TABLE `fa_ad` (
@@ -36,7 +36,7 @@ INSERT INTO `fa_ad` VALUES ('1', '1', '/uploads/20190604/6aef9eb39d62df20a4dac12
 INSERT INTO `fa_ad` VALUES ('2', '2', '/uploads/20190604/9ab6b8c0e6e5f070cc6ab95269761f28.jpg', '/index/article/3', '10', '2019-06-04 17:29:00');
 
 -- ----------------------------
--- Table structure for fa_admin
+-- Table structure for `fa_admin`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_admin`;
 CREATE TABLE `fa_admin` (
@@ -53,17 +53,18 @@ CREATE TABLE `fa_admin` (
   `updatetime` int(10) DEFAULT NULL COMMENT '更新时间',
   `token` varchar(59) NOT NULL DEFAULT '' COMMENT 'Session标识',
   `status` varchar(30) NOT NULL DEFAULT 'normal' COMMENT '状态',
+  `artist_id` int(11) DEFAULT NULL COMMENT '艺术家id',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of fa_admin
 -- ----------------------------
-INSERT INTO `fa_admin` VALUES ('1', 'admin', 'Admin', '68fcb8553802d86f466e62ec05e0950a', 'af1816', '/assets/img/avatar.png', 'admin@admin.com', '0', '1559701599', '1492186163', '1559701599', '8f445819-3dfa-41c7-86b2-db2c63797af2', 'normal');
+INSERT INTO `fa_admin` VALUES ('1', 'admin', 'Admin', '68fcb8553802d86f466e62ec05e0950a', 'af1816', '/assets/img/avatar.png', 'admin@admin.com', '0', '1559747144', '1492186163', '1559747144', '24405d98-95f2-4273-86d4-25c73b27bea7', 'normal', null);
 
 -- ----------------------------
--- Table structure for fa_admin_log
+-- Table structure for `fa_admin_log`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_admin_log`;
 CREATE TABLE `fa_admin_log` (
@@ -78,7 +79,7 @@ CREATE TABLE `fa_admin_log` (
   `createtime` int(10) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`),
   KEY `name` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=757 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=863 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员日志表';
 
 -- ----------------------------
 -- Records of fa_admin_log
@@ -839,9 +840,115 @@ INSERT INTO `fa_admin_log` VALUES ('753', '1', 'admin', '/admin/general/config/d
 INSERT INTO `fa_admin_log` VALUES ('754', '1', 'admin', '/admin/general/config/demandset?addtabs=1', '需求管理 需求设置', '{\"addtabs\":\"1\",\"row\":{\"demandset1\":\"{\\\"0\\\":\\\"\\u56fd\\u753b\\\",\\\"1\\\":\\\"\\u6cb9\\u753b\\\",\\\"2\\\":\\\"\\u7248\\u753b\\\",\\\"3\\\":\\\"\\u5176\\u4ed6\\\"}\",\"demandset2\":\"{\\\"0\\\":\\\"te\\\",\\\"1\\\":\\\"te\\\"}\",\"demandset3\":\"[\\\"aa\\\",\\\"bb\\\"]\",\"demandset4\":\"[\\\"aa\\\",\\\"bb\\\"]\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559730644');
 INSERT INTO `fa_admin_log` VALUES ('755', '1', 'admin', '/admin/general/config/demandset?addtabs=1', '需求管理 需求设置', '{\"addtabs\":\"1\",\"row\":{\"demandset1\":\"{\\\"0\\\":\\\"\\u56fd\\u753b\\\",\\\"1\\\":\\\"\\u6cb9\\u753b\\\",\\\"2\\\":\\\"\\u7248\\u753b\\\",\\\"3\\\":\\\"\\u5176\\u4ed6\\\"}\",\"demandset2\":\"{\\\"0\\\":\\\"te\\\",\\\"1\\\":\\\"te\\\"}\",\"demandset3\":\"[\\\"aa\\\",\\\"bb\\\"]\",\"demandset4\":\"[\\\"aa\\\",\\\"bb\\\"]\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559730654');
 INSERT INTO `fa_admin_log` VALUES ('756', '1', 'admin', '/admin/general/config/demandset?addtabs=1', '需求管理 需求设置', '{\"addtabs\":\"1\",\"row\":{\"demandset1\":\"{\\\"0\\\":\\\"\\u56fd\\u753b\\\",\\\"1\\\":\\\"\\u6cb9\\u753b\\\",\\\"2\\\":\\\"\\u7248\\u753b\\\",\\\"3\\\":\\\"\\u5176\\u4ed6\\\"}\",\"demandset2\":\"{\\\"0\\\":\\\"te\\\",\\\"1\\\":\\\"te\\\",\\\"2\\\":\\\"asd\\\"}\",\"demandset3\":\"[\\\"aa\\\",\\\"bb\\\"]\",\"demandset4\":\"[\\\"aa\\\",\\\"bb\\\"]\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559730706');
+INSERT INTO `fa_admin_log` VALUES ('757', '1', 'admin', '/admin/index/login.html', '登录', '{\"__token__\":\"464f6b5187474aacfe5814c328128110\",\"username\":\"admin\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559734879');
+INSERT INTO `fa_admin_log` VALUES ('758', '1', 'admin', '/admin/general/config/demandset?addtabs=1', '需求管理 需求设置', '{\"addtabs\":\"1\",\"row\":{\"demandset1\":\"{\\\"0\\\":\\\"\\u56fd\\u753b\\\",\\\"1\\\":\\\"\\u6cb9\\u753b\\\",\\\"2\\\":\\\"\\u7248\\u753b\\\",\\\"3\\\":\\\"\\u5176\\u4ed6\\\"}\",\"demandset2\":\"{\\\"0\\\":\\\"\\u529d\\u4e16\\\",\\\"1\\\":\\\"\\u52a8\\u7269\\\",\\\"2\\\":\\\"\\u57ce\\u5e02\\\",\\\"3\\\":\\\"\\u5b97\\u6559\\\",\\\"4\\\":\\\"\\u5e7b\\u60f3\\\",\\\"5\\\":\\\"\\u62bd\\u8c61\\u4e3b\\u4e49\\\",\\\"6\\\":\\\"\\u6982\\u5ff5\\u827a\\u672f\\\",\\\"7\\\":\\\"\\u5176\\u4ed6\\\"}\",\"demandset3\":\"{\\\"0\\\":\\\"\\u4e1c\\u65b9\\\",\\\"1\\\":\\\"\\u51e0\\u4f55\\\",\\\"2\\\":\\\"\\u534a\\u62bd\\u8c61\\\",\\\"3\\\":\\\"\\u5355\\u7eaf\\u4e3b\\u4e49\\\",\\\"4\\\":\\\"\\u5370\\u8c61\\u6d3e\\\",\\\"5\\\":\\\"\\u5176\\u4ed6\\\"}\",\"demandset4\":\"{\\\"0\\\":\\\"\\u4e19\\u70ef\\u9178\\\",\\\"1\\\":\\\"\\u4e1d\\u7ef8\\\",\\\"2\\\":\\\"\\u4e59\\u70ef\\u57fa\\\",\\\"3\\\":\\\"\\u523a\\u7ee3\\\",\\\"4\\\":\\\"\\u55b7\\u6f06\\\",\\\"5\\\":\\\"\\u5730\\u7403\\\",\\\"6\\\":\\\"\\u5176\\u4ed6\\\"}\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741302');
+INSERT INTO `fa_admin_log` VALUES ('759', '1', 'admin', '/admin/general/config/demandset?addtabs=1', '需求管理 需求设置', '{\"addtabs\":\"1\",\"row\":{\"demandset1\":\"{\\\"0\\\":\\\"\\u56fd\\u753b\\\",\\\"1\\\":\\\"\\u6cb9\\u753b\\\",\\\"2\\\":\\\"\\u7248\\u753b\\\",\\\"3\\\":\\\"\\u5176\\u4ed6\\\"}\",\"demandset2\":\"{\\\"0\\\":\\\"\\u529d\\u4e16\\\",\\\"1\\\":\\\"\\u52a8\\u7269\\\",\\\"2\\\":\\\"\\u57ce\\u5e02\\\",\\\"3\\\":\\\"\\u5b97\\u6559\\\",\\\"4\\\":\\\"\\u5e7b\\u60f3\\\",\\\"5\\\":\\\"\\u62bd\\u8c61\\u4e3b\\u4e49\\\",\\\"6\\\":\\\"\\u6982\\u5ff5\\u827a\\u672f\\\",\\\"7\\\":\\\"\\u5176\\u4ed6\\\"}\",\"demandset3\":\"{\\\"0\\\":\\\"\\u4e1c\\u65b9\\\",\\\"1\\\":\\\"\\u51e0\\u4f55\\\",\\\"2\\\":\\\"\\u534a\\u62bd\\u8c61\\\",\\\"3\\\":\\\"\\u5355\\u7eaf\\u4e3b\\u4e49\\\",\\\"4\\\":\\\"\\u5370\\u8c61\\u6d3e\\\",\\\"5\\\":\\\"\\u5176\\u4ed6\\\"}\",\"demandset4\":\"{\\\"0\\\":\\\"\\u4e19\\u70ef\\u9178\\\",\\\"1\\\":\\\"\\u4e1d\\u7ef8\\\",\\\"2\\\":\\\"\\u4e59\\u70ef\\u57fa\\\",\\\"3\\\":\\\"\\u523a\\u7ee3\\\",\\\"4\\\":\\\"\\u55b7\\u6f06\\\",\\\"5\\\":\\\"\\u5730\\u7403\\\",\\\"6\\\":\\\"\\u5176\\u4ed6\\\"}\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741309');
+INSERT INTO `fa_admin_log` VALUES ('760', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741807');
+INSERT INTO `fa_admin_log` VALUES ('761', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_demand\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741816');
+INSERT INTO `fa_admin_log` VALUES ('762', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741876');
+INSERT INTO `fa_admin_log` VALUES ('763', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741876');
+INSERT INTO `fa_admin_log` VALUES ('764', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741877');
+INSERT INTO `fa_admin_log` VALUES ('765', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741877');
+INSERT INTO `fa_admin_log` VALUES ('766', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_user\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741879');
+INSERT INTO `fa_admin_log` VALUES ('767', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_user\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741879');
+INSERT INTO `fa_admin_log` VALUES ('768', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741888');
+INSERT INTO `fa_admin_log` VALUES ('769', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741888');
+INSERT INTO `fa_admin_log` VALUES ('770', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741888');
+INSERT INTO `fa_admin_log` VALUES ('771', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741888');
+INSERT INTO `fa_admin_log` VALUES ('772', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741896');
+INSERT INTO `fa_admin_log` VALUES ('773', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741896');
+INSERT INTO `fa_admin_log` VALUES ('774', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741897');
+INSERT INTO `fa_admin_log` VALUES ('775', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_ad\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741897');
+INSERT INTO `fa_admin_log` VALUES ('776', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_artist\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741912');
+INSERT INTO `fa_admin_log` VALUES ('777', '1', 'admin', '/admin/command/get_field_list', '', '{\"table\":\"fa_artist\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741912');
+INSERT INTO `fa_admin_log` VALUES ('778', '1', 'admin', '/admin/command/command/action/command', '', '{\"commandtype\":\"crud\",\"isrelation\":\"1\",\"local\":\"0\",\"delete\":\"0\",\"force\":\"0\",\"table\":\"fa_demand\",\"controller\":\"\",\"model\":\"\",\"relation\":{\"2\":{\"relation\":\"fa_user\",\"relationmode\":\"belongsto\",\"relationforeignkey\":\"user_id\",\"relationprimarykey\":\"user_id\",\"relationfields\":[\"avatar\"]},\"4\":{\"relation\":\"fa_artist\",\"relationmode\":\"belongsto\",\"relationforeignkey\":\"artist_id\",\"relationprimarykey\":\"artist_id\",\"relationfields\":[\"name\",\"avatar\"]}},\"setcheckboxsuffix\":\"\",\"enumradiosuffix\":\"\",\"imagefield\":\"\",\"filefield\":\"\",\"intdatesuffix\":\"\",\"switchsuffix\":\"\",\"citysuffix\":\"\",\"selectpagesuffix\":\"\",\"selectpagessuffix\":\"\",\"ignorefields\":\"\",\"sortfield\":\"\",\"editorsuffix\":\"\",\"headingfilterfield\":\"\",\"action\":\"command\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741924');
+INSERT INTO `fa_admin_log` VALUES ('779', '1', 'admin', '/admin/command/command/action/execute', '', '{\"commandtype\":\"crud\",\"isrelation\":\"1\",\"local\":\"0\",\"delete\":\"0\",\"force\":\"0\",\"table\":\"fa_demand\",\"controller\":\"\",\"model\":\"\",\"relation\":{\"2\":{\"relation\":\"fa_user\",\"relationmode\":\"belongsto\",\"relationforeignkey\":\"user_id\",\"relationprimarykey\":\"user_id\",\"relationfields\":[\"avatar\"]},\"4\":{\"relation\":\"fa_artist\",\"relationmode\":\"belongsto\",\"relationforeignkey\":\"artist_id\",\"relationprimarykey\":\"artist_id\",\"relationfields\":[\"name\",\"avatar\"]}},\"setcheckboxsuffix\":\"\",\"enumradiosuffix\":\"\",\"imagefield\":\"\",\"filefield\":\"\",\"intdatesuffix\":\"\",\"switchsuffix\":\"\",\"citysuffix\":\"\",\"selectpagesuffix\":\"\",\"selectpagessuffix\":\"\",\"ignorefields\":\"\",\"sortfield\":\"\",\"editorsuffix\":\"\",\"headingfilterfield\":\"\",\"action\":\"execute\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741925');
+INSERT INTO `fa_admin_log` VALUES ('780', '1', 'admin', '/admin/index/index', '', '{\"action\":\"refreshmenu\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741925');
+INSERT INTO `fa_admin_log` VALUES ('781', '1', 'admin', '/admin/command/get_controller_list', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741927');
+INSERT INTO `fa_admin_log` VALUES ('782', '1', 'admin', '/admin/command/get_controller_list', '', '{\"q_word\":[\"\"],\"pageNumber\":\"2\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741929');
+INSERT INTO `fa_admin_log` VALUES ('783', '1', 'admin', '/admin/command/get_controller_list', '', '{\"q_word\":[\"\"],\"pageNumber\":\"2\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741931');
+INSERT INTO `fa_admin_log` VALUES ('784', '1', 'admin', '/admin/command/command/action/command', '', '{\"commandtype\":\"menu\",\"allcontroller\":\"0\",\"delete\":\"0\",\"force\":\"0\",\"controllerfile_text\":\"\",\"controllerfile\":\"Demand.php\",\"action\":\"command\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741932');
+INSERT INTO `fa_admin_log` VALUES ('785', '1', 'admin', '/admin/command/command/action/execute', '', '{\"commandtype\":\"menu\",\"allcontroller\":\"0\",\"delete\":\"0\",\"force\":\"0\",\"controllerfile_text\":\"\",\"controllerfile\":\"Demand.php\",\"action\":\"execute\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741932');
+INSERT INTO `fa_admin_log` VALUES ('786', '1', 'admin', '/admin/index/index', '', '{\"action\":\"refreshmenu\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741933');
+INSERT INTO `fa_admin_log` VALUES ('787', '1', 'admin', '/admin/auth/rule/edit/ids/231?dialog=1', '权限管理 菜单规则 编辑', '{\"dialog\":\"1\",\"row\":{\"ismenu\":\"1\",\"pid\":\"0\",\"name\":\"demand\",\"title\":\"\\u9700\\u6c42\\u5217\\u8868\",\"icon\":\"fa fa-align-left\",\"weigh\":\"0\",\"condition\":\"\",\"remark\":\"\",\"status\":\"normal\"},\"ids\":\"231\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741961');
+INSERT INTO `fa_admin_log` VALUES ('788', '1', 'admin', '/admin/index/index', '', '{\"action\":\"refreshmenu\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741961');
+INSERT INTO `fa_admin_log` VALUES ('789', '1', 'admin', '/admin/auth/rule/edit/ids/231?dialog=1', '权限管理 菜单规则 编辑', '{\"dialog\":\"1\",\"row\":{\"ismenu\":\"1\",\"pid\":\"229\",\"name\":\"demand\",\"title\":\"\\u9700\\u6c42\\u5217\\u8868\",\"icon\":\"fa fa-align-left\",\"weigh\":\"0\",\"condition\":\"\",\"remark\":\"\",\"status\":\"normal\"},\"ids\":\"231\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741969');
+INSERT INTO `fa_admin_log` VALUES ('790', '1', 'admin', '/admin/index/index', '', '{\"action\":\"refreshmenu\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559741969');
+INSERT INTO `fa_admin_log` VALUES ('791', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742423');
+INSERT INTO `fa_admin_log` VALUES ('792', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742461');
+INSERT INTO `fa_admin_log` VALUES ('793', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742469');
+INSERT INTO `fa_admin_log` VALUES ('794', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742528');
+INSERT INTO `fa_admin_log` VALUES ('795', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"type\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742532');
+INSERT INTO `fa_admin_log` VALUES ('796', '1', 'admin', '/admin/artist/index', '艺术家管理 艺术家 查看', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"artist_id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742534');
+INSERT INTO `fa_admin_log` VALUES ('797', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"type\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742561');
+INSERT INTO `fa_admin_log` VALUES ('798', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"type\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742707');
+INSERT INTO `fa_admin_log` VALUES ('799', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"type\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742762');
+INSERT INTO `fa_admin_log` VALUES ('800', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"type\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742768');
+INSERT INTO `fa_admin_log` VALUES ('801', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742776');
+INSERT INTO `fa_admin_log` VALUES ('802', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742837');
+INSERT INTO `fa_admin_log` VALUES ('803', '1', 'admin', '/admin/artist/index', '艺术家管理 艺术家 查看', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"artist_id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559742874');
+INSERT INTO `fa_admin_log` VALUES ('804', '1', 'admin', '/admin/general/config/demandset?addtabs=1', '需求管理 需求设置', '{\"addtabs\":\"1\",\"row\":{\"demandset1\":\"{\\\"0\\\":\\\"\\u56fd\\u753b\\\",\\\"1\\\":\\\"\\u6cb9\\u753b\\\",\\\"2\\\":\\\"\\u7248\\u753b\\\",\\\"3\\\":\\\"\\u5176\\u4ed6\\\"}\",\"demandset2\":\"{\\\"0\\\":\\\"\\u529d\\u4e16\\\",\\\"1\\\":\\\"\\u52a8\\u7269\\\",\\\"2\\\":\\\"\\u57ce\\u5e02\\\",\\\"3\\\":\\\"\\u5b97\\u6559\\\",\\\"4\\\":\\\"\\u5e7b\\u60f3\\\",\\\"5\\\":\\\"\\u62bd\\u8c61\\u4e3b\\u4e49\\\",\\\"6\\\":\\\"\\u6982\\u5ff5\\u827a\\u672f\\\",\\\"7\\\":\\\"\\u5176\\u4ed6\\\"}\",\"demandset3\":\"{\\\"0\\\":\\\"\\u4e1c\\u65b9\\\",\\\"1\\\":\\\"\\u51e0\\u4f55\\\",\\\"2\\\":\\\"\\u534a\\u62bd\\u8c61\\\",\\\"3\\\":\\\"\\u5355\\u7eaf\\u4e3b\\u4e49\\\",\\\"4\\\":\\\"\\u5370\\u8c61\\u6d3e\\\",\\\"5\\\":\\\"\\u5176\\u4ed6\\\"}\",\"demandset4\":\"{\\\"0\\\":\\\"\\u4e19\\u70ef\\u9178\\\",\\\"1\\\":\\\"\\u4e1d\\u7ef8\\\",\\\"2\\\":\\\"\\u4e59\\u70ef\\u57fa\\\",\\\"3\\\":\\\"\\u523a\\u7ee3\\\",\\\"4\\\":\\\"\\u55b7\\u6f06\\\",\\\"5\\\":\\\"\\u5730\\u7403\\\",\\\"6\\\":\\\"\\u5176\\u4ed6\\\"}\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743051');
+INSERT INTO `fa_admin_log` VALUES ('805', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743159');
+INSERT INTO `fa_admin_log` VALUES ('806', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743227');
+INSERT INTO `fa_admin_log` VALUES ('807', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743248');
+INSERT INTO `fa_admin_log` VALUES ('808', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743299');
+INSERT INTO `fa_admin_log` VALUES ('809', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"0\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743309');
+INSERT INTO `fa_admin_log` VALUES ('810', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"0\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743332');
+INSERT INTO `fa_admin_log` VALUES ('811', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"name\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743346');
+INSERT INTO `fa_admin_log` VALUES ('812', '1', 'admin', '/admin/artist/index', '艺术家管理 艺术家 查看', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"artist_id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743352');
+INSERT INTO `fa_admin_log` VALUES ('813', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"name\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743360');
+INSERT INTO `fa_admin_log` VALUES ('814', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743388');
+INSERT INTO `fa_admin_log` VALUES ('815', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"name\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743415');
+INSERT INTO `fa_admin_log` VALUES ('816', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"name\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743417');
+INSERT INTO `fa_admin_log` VALUES ('817', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"name\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743418');
+INSERT INTO `fa_admin_log` VALUES ('818', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"name\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743419');
+INSERT INTO `fa_admin_log` VALUES ('819', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"name\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743420');
+INSERT INTO `fa_admin_log` VALUES ('820', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"name\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743421');
+INSERT INTO `fa_admin_log` VALUES ('821', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"name\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset1\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743468');
+INSERT INTO `fa_admin_log` VALUES ('822', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"name\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset2\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743469');
+INSERT INTO `fa_admin_log` VALUES ('823', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"name\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset3\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743471');
+INSERT INTO `fa_admin_log` VALUES ('824', '1', 'admin', '/admin/demand/typeList', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"name\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"type\":\"demandset4\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743472');
+INSERT INTO `fa_admin_log` VALUES ('825', '1', 'admin', '/admin/artist/index', '艺术家管理 艺术家 查看', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"artist_id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743475');
+INSERT INTO `fa_admin_log` VALUES ('826', '1', 'admin', '/admin/user/index', '用户管理 查看', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"mobile\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"mobile\",\"keyField\":\"user_id\",\"searchField\":[\"mobile\"],\"mobile\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743503');
+INSERT INTO `fa_admin_log` VALUES ('827', '1', 'admin', '/admin/demand/add?dialog=1', '需求管理 需求列表 添加', '{\"dialog\":\"1\",\"row\":{\"user_id\":\"1\",\"details\":\"\\u9700\\u6c42\\u4e0d\\u96be\\uff01\\u8499\\u5a1c\\u4e3d\\u838e\\u5c31\\u884c\",\"mobile\":\"14780114469\",\"artist_id\":\"1\",\"type\":\"\\u56fd\\u753b\",\"category\":\"\\u62bd\\u8c61\\u4e3b\\u4e49\",\"style\":\"\\u5370\\u8c61\\u6d3e\",\"technique\":\"\\u4e1d\\u7ef8\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743505');
+INSERT INTO `fa_admin_log` VALUES ('828', '1', 'admin', '/admin/artist/index', '艺术家管理 艺术家 查看', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743516');
+INSERT INTO `fa_admin_log` VALUES ('829', '1', 'admin', '/admin/artist/index', '艺术家管理 艺术家 查看', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743519');
+INSERT INTO `fa_admin_log` VALUES ('830', '1', 'admin', '/admin/demand/edit/ids/1?dialog=1', '需求管理 需求列表 编辑', '{\"dialog\":\"1\",\"row\":{\"user_id\":\"1\",\"details\":\"\\u9700\\u6c42\\u4e0d\\u96be\\uff01\\u8499\\u5a1c\\u4e3d\\u838e\\u5c31\\u884c\",\"mobile\":\"14780114469\",\"artist_id\":\"1\",\"type\":\"\\u56fd\\u753b\",\"category\":\"\\u62bd\\u8c61\\u4e3b\\u4e49\",\"style\":\"\\u5370\\u8c61\\u6d3e\",\"technique\":\"\\u4e1d\\u7ef8\"},\"ids\":\"1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743566');
+INSERT INTO `fa_admin_log` VALUES ('831', '1', 'admin', '/admin/artist/index', '艺术家管理 艺术家 查看', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743572');
+INSERT INTO `fa_admin_log` VALUES ('832', '1', 'admin', '/admin/artist/index', '艺术家管理 艺术家 查看', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743574');
+INSERT INTO `fa_admin_log` VALUES ('833', '1', 'admin', '/admin/artist/index', '艺术家管理 艺术家 查看', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743576');
+INSERT INTO `fa_admin_log` VALUES ('834', '1', 'admin', '/admin/demand/edit/ids/1?dialog=1', '需求管理 需求列表 编辑', '{\"dialog\":\"1\",\"row\":{\"user_id\":\"1\",\"details\":\"\\u9700\\u6c42\\u4e0d\\u96be\\uff01\\u8499\\u5a1c\\u4e3d\\u838e\\u5c31\\u884c\",\"mobile\":\"14780114469\",\"artist_id\":\"\",\"type\":\"\\u56fd\\u753b\",\"category\":\"\\u62bd\\u8c61\\u4e3b\\u4e49\",\"style\":\"\\u5370\\u8c61\\u6d3e\",\"technique\":\"\\u4e1d\\u7ef8\"},\"ids\":\"1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743578');
+INSERT INTO `fa_admin_log` VALUES ('835', '1', 'admin', '/admin/auth/group/del/ids/2,3,5,4', '权限管理 角色组 删除', '{\"action\":\"del\",\"ids\":\"2,3,5,4\",\"params\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743932');
+INSERT INTO `fa_admin_log` VALUES ('836', '1', 'admin', '/admin/auth/group/del/ids/2', '权限管理 角色组 删除', '{\"action\":\"del\",\"ids\":\"2\",\"params\":\"\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743935');
+INSERT INTO `fa_admin_log` VALUES ('837', '1', 'admin', '/admin/auth/group/roletree', '', '{\"pid\":\"1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743940');
+INSERT INTO `fa_admin_log` VALUES ('838', '1', 'admin', '/admin/auth/group/add?dialog=1', '权限管理 角色组 添加', '{\"dialog\":\"1\",\"row\":{\"rules\":\"7,23,24,25,26,27,28,8,29,30,31,32,33,34,9,40,41,42,43,10,44,45,46,11,47,48,49,50,92,93,94,95,96,97,98,105,100,101,102,103,104,165,166,167,168,169,170,177,171,172,173,174,175,176,178,179,180,181,182,183,190,113,114,115,116,117,118,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,228,222,223,224,225,226,227,229,230,231,232,233,234,235,236,2,5\",\"pid\":\"1\",\"name\":\"\\u8d85\\u7ea7\\u7ba1\\u7406\\u5458\",\"status\":\"normal\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743979');
+INSERT INTO `fa_admin_log` VALUES ('839', '1', 'admin', '/admin/auth/group/roletree', '', '{\"pid\":\"1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559743983');
+INSERT INTO `fa_admin_log` VALUES ('840', '1', 'admin', '/admin/auth/group/add?dialog=1', '权限管理 角色组 添加', '{\"dialog\":\"1\",\"row\":{\"rules\":\"1,13,14,15,16,17\",\"pid\":\"1\",\"name\":\"\\u827a\\u672f\\u5bb6\\u540e\\u53f0\\u7ba1\\u7406\\u5458\",\"status\":\"normal\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559744007');
+INSERT INTO `fa_admin_log` VALUES ('841', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"test1\",\"password\":\"asd123123\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559745141');
+INSERT INTO `fa_admin_log` VALUES ('842', '0', 'Unknown', '/admin/index/login', '登录', '{\"__token__\":\"d65a0e7eaf86e976f22a4ed0124d3774\",\"username\":\"test1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559745153');
+INSERT INTO `fa_admin_log` VALUES ('843', '1', 'admin', '/admin/index/login', '登录', '{\"__token__\":\"50186b9be35ccb8ec635ad9e150cbcff\",\"username\":\"admin\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559745160');
+INSERT INTO `fa_admin_log` VALUES ('844', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"\",\"password\":\"\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559745706');
+INSERT INTO `fa_admin_log` VALUES ('845', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"\",\"password\":\"\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559745741');
+INSERT INTO `fa_admin_log` VALUES ('846', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"test1\",\"password\":\"asd123123\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559745924');
+INSERT INTO `fa_admin_log` VALUES ('847', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"test1\",\"password\":\"asd123123\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559746051');
+INSERT INTO `fa_admin_log` VALUES ('848', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"test1\",\"password\":\"asd123123\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559746119');
+INSERT INTO `fa_admin_log` VALUES ('849', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"test1\",\"password\":\"asd123123\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559746143');
+INSERT INTO `fa_admin_log` VALUES ('850', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"test1\",\"password\":\"asd123123\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559746164');
+INSERT INTO `fa_admin_log` VALUES ('851', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"test1\",\"password\":\"asd123123\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559746172');
+INSERT INTO `fa_admin_log` VALUES ('852', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"test1\",\"password\":\"asd123123\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559746338');
+INSERT INTO `fa_admin_log` VALUES ('853', '3', 'test1', '/admin/index/login', '登录', '{\"__token__\":\"22de2a6e5700e987f3e3dde08d80b347\",\"username\":\"test1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559746349');
+INSERT INTO `fa_admin_log` VALUES ('854', '1', 'admin', '/admin/index/login', '登录', '{\"__token__\":\"61ca6484d41bdc58564afa9f4b5c2dd2\",\"username\":\"admin\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559746356');
+INSERT INTO `fa_admin_log` VALUES ('855', '1', 'admin', '/admin/artist/add_account?artist_id=1&ids=1&dialog=1', '', '{\"artist_id\":\"1\",\"ids\":\"1\",\"dialog\":\"1\",\"row\":{\"username\":\"test1\",\"password\":\"asd123123\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559746426');
+INSERT INTO `fa_admin_log` VALUES ('856', '1', 'admin', '/admin/artist/add_account?artist_id=1&ids=1&dialog=1', '', '{\"artist_id\":\"1\",\"ids\":\"1\",\"dialog\":\"1\",\"row\":{\"username\":\"test2\",\"password\":\"asd123123\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559746483');
+INSERT INTO `fa_admin_log` VALUES ('857', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"test2\",\"password\":\"\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559747048');
+INSERT INTO `fa_admin_log` VALUES ('858', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"test2\",\"password\":\"\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559747112');
+INSERT INTO `fa_admin_log` VALUES ('859', '0', 'Unknown', '/admin/index/login', '登录', '{\"__token__\":\"99e4734ec81f5f5375b27a72a303a673\",\"username\":\"test2\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559747120');
+INSERT INTO `fa_admin_log` VALUES ('860', '3', 'test1', '/admin/index/login', '登录', '{\"__token__\":\"3c028600ecd7a6644fb0df3b918f12b0\",\"username\":\"test1\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559747132');
+INSERT INTO `fa_admin_log` VALUES ('861', '1', 'admin', '/admin/index/login', '登录', '{\"__token__\":\"8778749635f78437cadfaebb4e251ae0\",\"username\":\"admin\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559747144');
+INSERT INTO `fa_admin_log` VALUES ('862', '1', 'admin', '/admin/artist/add_account?artist_id=2&ids=2&dialog=1', '', '{\"artist_id\":\"2\",\"ids\":\"2\",\"dialog\":\"1\",\"row\":{\"username\":\"test3\",\"password\":\"\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559747225');
 
 -- ----------------------------
--- Table structure for fa_area
+-- Table structure for `fa_area`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_area`;
 CREATE TABLE `fa_area` (
@@ -4614,7 +4721,7 @@ INSERT INTO `fa_area` VALUES ('3747', '3738', '路环岛', '路环岛', '中国,
 INSERT INTO `fa_area` VALUES ('3748', '3747', '圣方济各堂区', '圣方济各堂区', '中国,澳门特别行政区,路环岛,圣方济各堂区', '3', 'stfrancisxavier\'sparish', '00853', '999078', 'S', '113.559954', '22.123486');
 
 -- ----------------------------
--- Table structure for fa_article
+-- Table structure for `fa_article`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_article`;
 CREATE TABLE `fa_article` (
@@ -4635,7 +4742,7 @@ INSERT INTO `fa_article` VALUES ('1', '论田园诗派', '陶渊明\r\n东晋诗
 INSERT INTO `fa_article` VALUES ('2', '人生的意义', '匆来匆往,为了生计日夜奔波。\r\n你是否考虑过未来，理想，或者什么想做的事，\r\n世界的本质又是什么\r\n人类存在的意义又是什么\r\n以及死后会怎样', '<p><img src=\"/uploads/20190605/8bae645a0e5bd2d990ad8763ff91c62c.jpg\" data-filename=\"filename\" style=\"width: 470px;\"><br></p>', '走神怪', '/uploads/20190605/d1680159da6b1092f864560250871079.jpg', '2019-06-05 14:30:01');
 
 -- ----------------------------
--- Table structure for fa_article_comment
+-- Table structure for `fa_article_comment`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_article_comment`;
 CREATE TABLE `fa_article_comment` (
@@ -4653,7 +4760,7 @@ CREATE TABLE `fa_article_comment` (
 INSERT INTO `fa_article_comment` VALUES ('1', '老师，对田园诗的论述很精彩!', '1', '2019-06-05 14:42:28', '1');
 
 -- ----------------------------
--- Table structure for fa_artist
+-- Table structure for `fa_artist`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_artist`;
 CREATE TABLE `fa_artist` (
@@ -4673,7 +4780,7 @@ INSERT INTO `fa_artist` VALUES ('1', '张秋芬', '/uploads/20190605/1684056f657
 INSERT INTO `fa_artist` VALUES ('2', '林尘', '/assets/img/qrcode.png', '超级厉害', '10.00', '2019-06-05 14:02:28');
 
 -- ----------------------------
--- Table structure for fa_artist_comment
+-- Table structure for `fa_artist_comment`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_artist_comment`;
 CREATE TABLE `fa_artist_comment` (
@@ -4691,7 +4798,7 @@ INSERT INTO `fa_artist_comment` VALUES ('4', '1', 'test2', '2019-06-05 11:22:36'
 INSERT INTO `fa_artist_comment` VALUES ('5', '1', '作者nb', '2019-06-05 11:36:26');
 
 -- ----------------------------
--- Table structure for fa_attachment
+-- Table structure for `fa_attachment`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_attachment`;
 CREATE TABLE `fa_attachment` (
@@ -4728,7 +4835,7 @@ INSERT INTO `fa_attachment` VALUES ('8', '1', '0', '/uploads/20190605/d1680159da
 INSERT INTO `fa_attachment` VALUES ('9', '1', '0', '/uploads/20190605/8bae645a0e5bd2d990ad8763ff91c62c.jpg', '500', '410', 'jpg', '0', '27853', 'image/jpeg', '{\"name\":\"u=2858651661,1384164533&amp;fm=26&amp;gp=0.jpg\"}', '1559716161', '1559716161', '1559716161', 'local', '8d1a5113d2d876523ad06c928cd64b4e3e4d142a');
 
 -- ----------------------------
--- Table structure for fa_auth_group
+-- Table structure for `fa_auth_group`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_auth_group`;
 CREATE TABLE `fa_auth_group` (
@@ -4740,19 +4847,17 @@ CREATE TABLE `fa_auth_group` (
   `updatetime` int(10) DEFAULT NULL COMMENT '更新时间',
   `status` varchar(30) NOT NULL DEFAULT '' COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='分组表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='分组表';
 
 -- ----------------------------
 -- Records of fa_auth_group
 -- ----------------------------
 INSERT INTO `fa_auth_group` VALUES ('1', '0', 'Admin group', '*', '1490883540', '149088354', 'normal');
-INSERT INTO `fa_auth_group` VALUES ('2', '1', 'Second group', '13,14,16,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,40,41,42,43,44,45,46,47,48,49,50,55,56,57,58,59,60,61,62,63,64,65,1,9,10,11,7,6,8,2,4,5', '1490883540', '1505465692', 'normal');
-INSERT INTO `fa_auth_group` VALUES ('3', '2', 'Third group', '1,4,9,10,11,13,14,15,16,17,40,41,42,43,44,45,46,47,48,49,50,55,56,57,58,59,60,61,62,63,64,65,5', '1490883540', '1502205322', 'normal');
-INSERT INTO `fa_auth_group` VALUES ('4', '1', 'Second group 2', '1,4,13,14,15,16,17,55,56,57,58,59,60,61,62,63,64,65', '1490883540', '1502205350', 'normal');
-INSERT INTO `fa_auth_group` VALUES ('5', '2', 'Third group 2', '1,2,6,7,8,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34', '1490883540', '1502205344', 'normal');
+INSERT INTO `fa_auth_group` VALUES ('6', '1', '超级管理员', '7,23,24,25,26,27,28,8,29,30,31,32,33,34,9,40,41,42,43,10,44,45,46,11,47,48,49,50,92,93,94,95,96,97,98,105,100,101,102,103,104,165,166,167,168,169,170,177,171,172,173,174,175,176,178,179,180,181,182,183,190,113,114,115,116,117,118,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,228,222,223,224,225,226,227,229,230,231,232,233,234,235,236,2,5', '1559743979', '1559743979', 'normal');
+INSERT INTO `fa_auth_group` VALUES ('7', '1', '艺术家后台管理员', '1,13,14,15,16,17', '1559744007', '1559744007', 'normal');
 
 -- ----------------------------
--- Table structure for fa_auth_group_access
+-- Table structure for `fa_auth_group_access`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_auth_group_access`;
 CREATE TABLE `fa_auth_group_access` (
@@ -4769,7 +4874,7 @@ CREATE TABLE `fa_auth_group_access` (
 INSERT INTO `fa_auth_group_access` VALUES ('1', '1');
 
 -- ----------------------------
--- Table structure for fa_auth_rule
+-- Table structure for `fa_auth_rule`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_auth_rule`;
 CREATE TABLE `fa_auth_rule` (
@@ -4790,7 +4895,7 @@ CREATE TABLE `fa_auth_rule` (
   UNIQUE KEY `name` (`name`) USING BTREE,
   KEY `pid` (`pid`),
   KEY `weigh` (`weigh`)
-) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='节点表';
+) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='节点表';
 
 -- ----------------------------
 -- Records of fa_auth_rule
@@ -4946,9 +5051,15 @@ INSERT INTO `fa_auth_rule` VALUES ('227', 'file', '222', 'tx/multi', '批量更�
 INSERT INTO `fa_auth_rule` VALUES ('228', 'file', '0', 'tx_manage', '提现管理', 'fa fa-navicon', '', '', '1', '1559721627', '1559721644', '0', 'normal');
 INSERT INTO `fa_auth_rule` VALUES ('229', 'file', '0', 'demand_manage', '需求管理', 'fa fa-align-justify', '', '', '1', '1559724184', '1559724184', '0', 'normal');
 INSERT INTO `fa_auth_rule` VALUES ('230', 'file', '229', 'general/config/demandset', '需求设置', 'fa fa-wrench', '', '', '1', '1559726047', '1559726047', '0', 'normal');
+INSERT INTO `fa_auth_rule` VALUES ('231', 'file', '229', 'demand', '需求列表', 'fa fa-align-left', '', '', '1', '1559741932', '1559741969', '0', 'normal');
+INSERT INTO `fa_auth_rule` VALUES ('232', 'file', '231', 'demand/index', '查看', 'fa fa-circle-o', '', '', '0', '1559741932', '1559741932', '0', 'normal');
+INSERT INTO `fa_auth_rule` VALUES ('233', 'file', '231', 'demand/add', '添加', 'fa fa-circle-o', '', '', '0', '1559741932', '1559741932', '0', 'normal');
+INSERT INTO `fa_auth_rule` VALUES ('234', 'file', '231', 'demand/edit', '编辑', 'fa fa-circle-o', '', '', '0', '1559741932', '1559741932', '0', 'normal');
+INSERT INTO `fa_auth_rule` VALUES ('235', 'file', '231', 'demand/del', '删除', 'fa fa-circle-o', '', '', '0', '1559741932', '1559741932', '0', 'normal');
+INSERT INTO `fa_auth_rule` VALUES ('236', 'file', '231', 'demand/multi', '批量更新', 'fa fa-circle-o', '', '', '0', '1559741932', '1559741932', '0', 'normal');
 
 -- ----------------------------
--- Table structure for fa_category
+-- Table structure for `fa_category`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_category`;
 CREATE TABLE `fa_category` (
@@ -4989,7 +5100,7 @@ INSERT INTO `fa_category` VALUES ('12', '0', 'test', '测试1', 'test1', 'recomm
 INSERT INTO `fa_category` VALUES ('13', '0', 'test', '测试2', 'test2', 'recommend', '/assets/img/qrcode.png', '', '', 'test2', '1497015738', '1497015738', '13', 'normal');
 
 -- ----------------------------
--- Table structure for fa_command
+-- Table structure for `fa_command`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_command`;
 CREATE TABLE `fa_command` (
@@ -5003,7 +5114,7 @@ CREATE TABLE `fa_command` (
   `updatetime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `status` enum('successed','failured') NOT NULL DEFAULT 'failured' COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='在线命令表';
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='在线命令表';
 
 -- ----------------------------
 -- Records of fa_command
@@ -5043,9 +5154,11 @@ INSERT INTO `fa_command` VALUES ('32', 'crud', '[\"--table=fa_order\",\"--fields
 INSERT INTO `fa_command` VALUES ('33', 'menu', '[\"--controller=Order\"]', 'php think menu --controller=Order', 'Build Successed!', '1559717403', '1559717403', '1559717403', 'successed');
 INSERT INTO `fa_command` VALUES ('34', 'crud', '[\"--table=fa_tx\",\"--local=0\",\"--relation=fa_artist\",\"--relationmode=belongsto\",\"--relationforeignkey=artist_id\",\"--relationprimarykey=artist_id\",\"--relationfields=name,avatar\"]', 'php think crud --table=fa_tx --local=0 --relation=fa_artist --relationmode=belongsto --relationforeignkey=artist_id --relationprimarykey=artist_id --relationfields=name,avatar', 'Build Successed', '1559721521', '1559721521', '1559721521', 'successed');
 INSERT INTO `fa_command` VALUES ('35', 'menu', '[\"--controller=Tx\"]', 'php think menu --controller=Tx', 'Build Successed!', '1559721530', '1559721530', '1559721530', 'successed');
+INSERT INTO `fa_command` VALUES ('36', 'crud', '[\"--table=fa_demand\",\"--local=0\",\"--relation=fa_user\",\"--relationmode=belongsto\",\"--relationforeignkey=user_id\",\"--relationprimarykey=user_id\",\"--relationfields=avatar\",\"--relation=fa_artist\",\"--relationmode=belongsto\",\"--relationforeignkey=artist_id\",\"--relationprimarykey=artist_id\",\"--relationfields=name,avatar\"]', 'php think crud --table=fa_demand --local=0 --relation=fa_user --relationmode=belongsto --relationforeignkey=user_id --relationprimarykey=user_id --relationfields=avatar --relation=fa_artist --relationmode=belongsto --relationforeignkey=artist_id --relationprimarykey=artist_id --relationfields=name,avatar', 'Build Successed', '1559741924', '1559741924', '1559741924', 'successed');
+INSERT INTO `fa_command` VALUES ('37', 'menu', '[\"--controller=Demand\"]', 'php think menu --controller=Demand', 'Build Successed!', '1559741932', '1559741932', '1559741932', 'successed');
 
 -- ----------------------------
--- Table structure for fa_config
+-- Table structure for `fa_config`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_config`;
 CREATE TABLE `fa_config` (
@@ -5083,35 +5196,36 @@ INSERT INTO `fa_config` VALUES ('14', 'mail_smtp_user', 'email', 'Mail smtp user
 INSERT INTO `fa_config` VALUES ('15', 'mail_smtp_pass', 'email', 'Mail smtp password', '（填写您的密码）', 'string', 'password', '', '', '');
 INSERT INTO `fa_config` VALUES ('16', 'mail_verify_type', 'email', 'Mail vertify type', '（SMTP验证方式[推荐SSL]）', 'select', '2', '[\"None\",\"TLS\",\"SSL\"]', '', '');
 INSERT INTO `fa_config` VALUES ('17', 'mail_from', 'email', 'Mail from', '', 'string', '10000@qq.com', '', '', '');
-INSERT INTO `fa_config` VALUES ('19', 'demandset1', 'demandset', 'Demandset1', '一级分类:国画,油画...', 'text', '\"{\\\"0\\\":\\\"\\u56fd\\u753b\\\",\\\"1\\\":\\\"\\u6cb9\\u753b\\\",\\\"2\\\":\\\"\\u7248\\u753b\\\",\\\"3\\\":\\\"\\u5176\\u4ed6\\\"}\"', '', 'required', '');
-INSERT INTO `fa_config` VALUES ('20', 'demandset2', 'demandset', 'Demandset2', '画作类别:劝世,动物....', 'text', '\"{\\\"0\\\":\\\"te\\\",\\\"1\\\":\\\"te\\\",\\\"2\\\":\\\"asd\\\"}\"', '', 'required', '');
-INSERT INTO `fa_config` VALUES ('21', 'demandset3', 'demandset', 'Demandset3', '画作风格:东方,几何...', 'text', '\"[\\\"aa\\\",\\\"bb\\\"]\"', '', 'required', '');
-INSERT INTO `fa_config` VALUES ('22', 'demandset4', 'demandset', 'Demandset4', '画作手法:丙烯酸,乙烯基...', 'text', '\"[\\\"aa\\\",\\\"bb\\\"]\"', '', 'required', '');
+INSERT INTO `fa_config` VALUES ('19', 'demandset1', 'demandset', 'Demandset1', '一级分类:国画,油画...', 'text', '{\"0\":\"国画\",\"1\":\"油画\",\"2\":\"版画\",\"3\":\"其他\"}', '', 'required', '');
+INSERT INTO `fa_config` VALUES ('20', 'demandset2', 'demandset', 'Demandset2', '画作类别:劝世,动物....', 'text', '{\"0\":\"劝世\",\"1\":\"动物\",\"2\":\"城市\",\"3\":\"宗教\",\"4\":\"幻想\",\"5\":\"抽象主义\",\"6\":\"概念艺术\",\"7\":\"其他\"}', '', 'required', '');
+INSERT INTO `fa_config` VALUES ('21', 'demandset3', 'demandset', 'Demandset3', '画作风格:东方,几何...', 'text', '{\"0\":\"东方\",\"1\":\"几何\",\"2\":\"半抽象\",\"3\":\"单纯主义\",\"4\":\"印象派\",\"5\":\"其他\"}', '', 'required', '');
+INSERT INTO `fa_config` VALUES ('22', 'demandset4', 'demandset', 'Demandset4', '画作手法:丙烯酸,乙烯基...', 'text', '{\"0\":\"丙烯酸\",\"1\":\"丝绸\",\"2\":\"乙烯基\",\"3\":\"刺绣\",\"4\":\"喷漆\",\"5\":\"地球\",\"6\":\"其他\"}', '', 'required', '');
 
 -- ----------------------------
--- Table structure for fa_demand
+-- Table structure for `fa_demand`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_demand`;
 CREATE TABLE `fa_demand` (
   `demand_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `type1_id` enum('10','20','30','40') NOT NULL COMMENT '一级分类:10=国画,20=油画,30=版画,40=其他',
   `user_id` int(11) NOT NULL COMMENT '用户id',
   `details` text NOT NULL COMMENT '需求内容',
   `mobile` bigint(11) NOT NULL COMMENT '手机号',
-  `artist_id` int(11) NOT NULL DEFAULT '0' COMMENT '艺术家id',
+  `artist_id` int(11) NOT NULL COMMENT '艺术家id',
   `createtime` datetime NOT NULL COMMENT '创建时间',
-  `type` enum('10','20','30','40','50','60','70','80') DEFAULT NULL COMMENT '画作类别:10=劝世,20=动物,30=城市,40=宗教,50=幻想,60=抽象主义,70=概念艺术,80=其他',
-  `style` enum('10','20','30','40','50','60') NOT NULL COMMENT '画作风格:10=东方,20=几何,30=半抽象,40=单纯主义,50=印象派,60=其他',
-  `technique` enum('10','20','30','40','50','60','70') NOT NULL COMMENT '作画手法:10=丙烯酸,20=丝绸,30=乙烯基,40=刺绣,50=喷漆,60=地球,70=其他',
+  `type` varchar(64) NOT NULL COMMENT '一级分类',
+  `category` varchar(64) NOT NULL COMMENT '作画类别',
+  `style` varchar(64) NOT NULL COMMENT '作画风格',
+  `technique` varchar(64) NOT NULL COMMENT '作画手法',
   PRIMARY KEY (`demand_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='需求表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='需求表';
 
 -- ----------------------------
 -- Records of fa_demand
 -- ----------------------------
+INSERT INTO `fa_demand` VALUES ('1', '1', '需求不难！蒙娜丽莎就行', '14780114469', '0', '2019-06-05 22:05:05', '国画', '抽象主义', '印象派', '丝绸');
 
 -- ----------------------------
--- Table structure for fa_ems
+-- Table structure for `fa_ems`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_ems`;
 CREATE TABLE `fa_ems` (
@@ -5130,7 +5244,7 @@ CREATE TABLE `fa_ems` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for fa_goods
+-- Table structure for `fa_goods`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_goods`;
 CREATE TABLE `fa_goods` (
@@ -5160,7 +5274,7 @@ INSERT INTO `fa_goods` VALUES ('2', '1', '3', '40', '44', '魏碑唐楷1', '<p>�
 INSERT INTO `fa_goods` VALUES ('6', '2', '1', '20', '36', '星空', '<p>星空</p><p>古往今来最令人深思的星空</p>', '星空,水粉画,人物画,无框,原作', '80cm X 80cm', '1999年', '10000.00', '/uploads/20190604/952b84a84bdaefec1224364c95ebb53a.jpg', '/uploads/20190604/85bf06bb5108d81111cb2d0bf3c862a2.jpg', '10', '2019-06-05 14:10:14');
 
 -- ----------------------------
--- Table structure for fa_goods_comments
+-- Table structure for `fa_goods_comments`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_goods_comments`;
 CREATE TABLE `fa_goods_comments` (
@@ -5178,7 +5292,7 @@ CREATE TABLE `fa_goods_comments` (
 INSERT INTO `fa_goods_comments` VALUES ('1', '1', '好书好书!这副楷书我愿意出价100w', '2019-06-05 14:17:06', '1');
 
 -- ----------------------------
--- Table structure for fa_likes
+-- Table structure for `fa_likes`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_likes`;
 CREATE TABLE `fa_likes` (
@@ -5196,7 +5310,7 @@ CREATE TABLE `fa_likes` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for fa_order
+-- Table structure for `fa_order`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_order`;
 CREATE TABLE `fa_order` (
@@ -5224,7 +5338,7 @@ INSERT INTO `fa_order` VALUES ('1', '201906051454564562', '1', '1', '1', '9000.0
 INSERT INTO `fa_order` VALUES ('2', '201906051454567845', '1', '6', '2', '19800.00', '王强', '17628657632', '成都市青羊区青华路24号6栋2单元12号', '20', '201906051454562131', '2019-06-05 14:58:31', '10', '0000-00-00 00:00:00');
 
 -- ----------------------------
--- Table structure for fa_sms
+-- Table structure for `fa_sms`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_sms`;
 CREATE TABLE `fa_sms` (
@@ -5243,7 +5357,7 @@ CREATE TABLE `fa_sms` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for fa_test
+-- Table structure for `fa_test`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_test`;
 CREATE TABLE `fa_test` (
@@ -5287,7 +5401,7 @@ CREATE TABLE `fa_test` (
 INSERT INTO `fa_test` VALUES ('1', '0', '12', '12,13', 'monday', 'hot,index', 'male', 'music,reading', '我是一篇测试文章', '<p>我是测试内容</p>', '/assets/img/avatar.png', '/assets/img/avatar.png,/assets/img/qrcode.png', '/assets/img/avatar.png', '关键字', '描述', '广西壮族自治区/百色市/平果县', '{\"a\":\"1\",\"b\":\"2\"}', '0.00', '0', '2017-07-10', '2017-07-10 18:24:45', '2017', '18:24:45', '1499682285', '1499682526', '1499682526', null, '0', '1', 'normal', '1');
 
 -- ----------------------------
--- Table structure for fa_tx
+-- Table structure for `fa_tx`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_tx`;
 CREATE TABLE `fa_tx` (
@@ -5307,7 +5421,7 @@ INSERT INTO `fa_tx` VALUES ('2', '2', '10.00', '9.60', '30');
 INSERT INTO `fa_tx` VALUES ('3', '1', '10.00', '9.50', '10');
 
 -- ----------------------------
--- Table structure for fa_type
+-- Table structure for `fa_type`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_type`;
 CREATE TABLE `fa_type` (
@@ -5355,7 +5469,7 @@ INSERT INTO `fa_type` VALUES ('45', '瘦金体', '', '40', '2019-06-04 23:14:08'
 INSERT INTO `fa_type` VALUES ('46', '风景画', '', '20', '2019-06-04 23:14:34', '3');
 
 -- ----------------------------
--- Table structure for fa_user
+-- Table structure for `fa_user`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_user`;
 CREATE TABLE `fa_user` (
@@ -5375,7 +5489,7 @@ CREATE TABLE `fa_user` (
 INSERT INTO `fa_user` VALUES ('1', '/uploads/20190604/6aef9eb39d62df20a4dac1230694817b.jpg', '14780114469', 'fe11657374e7b8013b915ea56cf9de93', 'rh8g', '2019-06-04 17:07:11');
 
 -- ----------------------------
--- Table structure for fa_user_token
+-- Table structure for `fa_user_token`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_user_token`;
 CREATE TABLE `fa_user_token` (
@@ -5391,7 +5505,7 @@ CREATE TABLE `fa_user_token` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for fa_version
+-- Table structure for `fa_version`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_version`;
 CREATE TABLE `fa_version` (
@@ -5415,7 +5529,7 @@ CREATE TABLE `fa_version` (
 INSERT INTO `fa_version` VALUES ('1', '1.1.1,2', '1.2.1', '20M', '更新内容', 'https://www.fastadmin.net/download.html', '1', '1520425318', '0', '0', 'normal');
 
 -- ----------------------------
--- Table structure for fa_weekstar
+-- Table structure for `fa_weekstar`
 -- ----------------------------
 DROP TABLE IF EXISTS `fa_weekstar`;
 CREATE TABLE `fa_weekstar` (

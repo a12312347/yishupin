@@ -29,7 +29,15 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'avatar', title: __('Avatar'), events: Table.api.events.image, formatter: Table.api.formatter.image},
                         {field: 'wallet', title: __('Wallet'), operate:'BETWEEN'},
                         {field: 'createtime', title: __('Createtime'), operate:'RANGE', addclass:'datetimerange'},
-                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
+                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate,buttons:[
+                            {
+                                name:'add_account',
+                                title:'添加后台管理账号',
+                                icon:'fa fa-plus',
+                                classname:'btn btn-xs btn-primary btn-dialog',
+                                url:'artist/add_account?artist_id={row.artist_id}'
+                            }
+                        ]}
                     ]
                 ]
             });
@@ -38,6 +46,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             Table.api.bindevent(table);
         },
         add: function () {
+            Controller.api.bindevent();
+        },
+        add_account: function () {
             Controller.api.bindevent();
         },
         edit: function () {
