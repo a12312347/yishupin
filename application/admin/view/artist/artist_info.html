@@ -1,0 +1,54 @@
+<form id="artist_info-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('名称')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <!--<input id="c-name" data-rule="required" class="form-control" name="row[name]" type="text">-->
+            {if $row['name']}
+            {:Form::text('row[name]',$row['name'],array('data-rule'=>'required'))}
+            {else}
+            {:Form::text('row[name]',null,array('data-rule'=>'required'))}
+            {/if}
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('头像')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <!--<input id="c-name" data-rule="required" class="form-control" name="row[name]" type="text">-->
+            {if $row['avatar']}
+            {:Form::image('row[avatar]',$row['avatar'],array('data-rule'=>'required'))}
+            {else}
+            {:Form::image('row[avatar]',null,array('data-rule'=>'required'))}
+            {/if}
+
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('介绍')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <!--<input id="c-name" data-rule="required" class="form-control" name="row[name]" type="text">-->
+            {if $row['introduce']}
+            {:Form::textarea('row[introduce]',$row['introduce'],array('data-rule'=>'required'))}
+            {else}
+            {:Form::textarea('row[introduce]',null,array('data-rule'=>'required'))}
+            {/if}
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

@@ -17,6 +17,7 @@ class Order extends Backend
      * @var \app\common\model\Order
      */
     protected $model = null;
+    protected $noNeedRight=['*'];
 
     public function _initialize()
     {

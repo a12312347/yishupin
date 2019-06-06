@@ -3,8 +3,15 @@
 namespace app\admin\controller;
 
 use app\common\controller\Backend;
+use app\common\model\Ad;
+use think\Session;
+use Monolog\Formatter\ScalarFormatter;
 use think\Db;
 use fast\Random;
+use app\admin\model\AuthGroup;
+use app\admin\model\AuthGroupAccess;
+use app\admin\model\Admin;
+
 /**
  * 艺术家管理
  *
@@ -18,6 +25,7 @@ class Artist extends Backend
      * @var \app\common\model\Artist
      */
     protected $model = null;
+
 
     public function _initialize()
     {
@@ -107,6 +115,7 @@ class Artist extends Backend
             $params = $this->request->post("row/a");
             if ($params) {
                 $params = $this->preExcludeFields($params);
+
                 $params['createtime']=datetime(time());
 
                 if ($this->dataLimit && $this->dataLimitFieldAutoFill) {
@@ -152,32 +161,35 @@ class Artist extends Backend
      *
      * */
     public function add_account(){
-        $artist_id=$this->request->request('artist_id');
+        $row=$this->request->get();
+
+        if(empty($row['artist_id'])){
+            return $this->error('艺术家不存在!请刷新后重试!');
+        }
+
+        $admin=new Admin();
         if($this->request->post()){
             $params=$this->request->post('row/a');
-            $admin=model('Admin')->get(['artist_id'=>$artist_id]);
-
-            if(empty($admin)){
-                //添加账号
-                $params['artist_id']=$artist_id;
+            $adminaccount=$admin->get(['artist_id'=>$row['artist_id']]);
+            if(empty($adminaccount)){
+                //添加
                 $params['salt'] = Random::alnum();
-                $params['email']=$params['username'].'@qq.com';
-                $params['nickname']=$params['username'];
                 $params['password'] = md5(md5($params['password']) . $params['salt']);
                 $params['avatar'] = '/assets/img/avatar.png'; //设置新管理员默认头像。
-
-                $res=model('Admin')->validate('Admin.add')->save($params);
-                if ($res === false)
+                $params['email']=$params['username'].'@qq.com';
+                $params['nickname']=$params['username'];
+                $params['artist_id']=$row['artist_id'];
+                $result = $admin->validate('Admin.add')->save($params);
+                if ($result === false)
                 {
-                    $this->error(model('Admin')->getError());
+                    $this->error($admin->getError());
                 }
-                //艺术家分后台权限组id
-                $group_id=7;
-                model('AuthGroupAccess')->save(['uid'=>model('Admin')->getLastInsID(),'group_id'=>$group_id]);
-                return $this->success('添加成功!');
+                $group_id=7;//分后台权限组id
+                model('AuthGroupAccess')->save(['uid'=>$admin->id,'group_id'=>$group_id]);
+                $this->success('添加成功!');
 
             }else{
-                //修改账号
+                //修改
                 if ($params['password'])
                 {
                     $params['salt'] = Random::alnum();
@@ -187,28 +199,61 @@ class Artist extends Backend
                 {
                     unset($params['password'], $params['salt']);
                 }
-                $params['nickname']=$admin['nickname'];
-                $params['email']=$admin['email'];
-                $params['id']=$admin['id'];
+
+                $params['artist_id']=$row['artist_id'];
+                $params['nickname']=$params['username'];
+                $params['email']=$params['username']."@qq.com";
+
                 //这里需要针对username和email做唯一验证
                 $adminValidate = \think\Loader::validate('Admin');
                 $adminValidate->rule([
-                    'username' => 'require|max:50|unique:admin,username,' . $admin['id'],
-                    'email'    => 'require|email|unique:admin,email,' . $admin['id']
+                    'username' => 'require|max:50|unique:admin,username,' . $adminaccount['id'],
+                    'email'    => 'require|email|unique:admin,email,' . $adminaccount['id']
                 ]);
-                $result = model('Admin')->validate('Admin.edit')->save($params);
+
+                $result = $admin->validate('Admin.edit')->where(['id'=>$adminaccount['id']])->update($params);
                 if ($result === false)
                 {
-                    $this->error(model('Admin')->getError());
+                    $this->error($admin->getError());
                 }
-                $this->success('修改成功!');
+                return $this->success('修改成功!');
             }
-        }
-        $row=model('Admin')->get(['artist_id'=>$artist_id]);
-        $this->view->assign('row',$row);
 
+        }
+
+        $this->view->assign('row',$admin->get(['artist_id'=>$row['artist_id']]));
         return $this->view->fetch();
     }
+
+
+    /*
+     * --我的信息
+     *
+     * */
+    public function artist_info(){
+        $admin=Session::get('admin');
+        if(empty($admin['artist_id'])){
+            Session::clear();
+            return $this->error('该账户不属于艺术家后台账户!请重新登录!');
+        }
+        $row=$this->model->get(['artist_id'=>$admin['artist_id']]);
+        if($this->request->post()){
+            $params=$this->request->post('row/a');
+
+            $res=model('Artist')->where(['artist_id'=>$admin['artist_id']])
+                ->update(['name'=>$params['name'],'avatar'=>$params['avatar'],'introduce'=>$params['introduce']]);
+            if($res){
+                return $this->success('修改成功!');
+            }else{
+                return $this->error('修改失败!');
+            }
+        }
+        $this->view->assign('row',$row);
+        return $this->view->fetch();
+    }
+
+
+
 
 
 }

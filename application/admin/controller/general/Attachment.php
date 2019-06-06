@@ -17,6 +17,7 @@ class Attachment extends Backend
      * @var \app\common\model\Attachment
      */
     protected $model = null;
+    protected $noNeedRight=['*'];
 
     public function _initialize()
     {

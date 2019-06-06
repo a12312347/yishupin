@@ -18,6 +18,7 @@ class Type extends Backend
      * @var \app\common\model\Type
      */
     protected $model = null;
+    protected $noNeedRight=['*'];
 
     public function _initialize()
     {

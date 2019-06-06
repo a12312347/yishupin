@@ -51,6 +51,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         add_account: function () {
             Controller.api.bindevent();
         },
+        artist_info: function () {
+            Controller.api.bindevent();
+        },
         edit: function () {
             Controller.api.bindevent();
         },
