@@ -8,7 +8,7 @@
     <tbody>
     {volist name="row" id="vo"  }
     <tr>
-        <td>{:__('Introduce')}</td>
+        <td>{:__(ucfirst($key))}</td>
         <td>{$vo}</td>
     </tr>
     {/volist}

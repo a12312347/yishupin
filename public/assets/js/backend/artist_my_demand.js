@@ -7,8 +7,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 extend: {
                     index_url: 'artist_my_demand/index' + location.search,
                     add_url: 'artist_my_demand/add',
-                    edit_url: 'artist_my_demand/edit',
-                    del_url: 'artist_my_demand/del',
+                    //edit_url: 'artist_my_demand/edit',
+                    //del_url: 'artist_my_demand/del',
                     multi_url: 'artist_my_demand/multi',
                     table: 'demand',
                 }
@@ -33,7 +33,27 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'style', title: __('Style')},
                         {field: 'technique', title: __('Technique')},
                         {field: 'user.avatar', title: __('User.avatar'), events: Table.api.events.image, formatter: Table.api.formatter.image},
-                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
+                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate,buttons:[
+                            {
+                                name:'show_introduce',
+                                text:'查看需求',
+                                title:'查看需求',
+                                extend:'data-area=\'["80%","80%"]\'',
+                                classname:'btn-xs btn btn-primary btn-dialog',
+                                url:'artist_demand/show_introduce?demand_id={row.demand_id}'
+                            },
+                            {
+                                name:'leave',
+                                text:'释放',
+                                title:'释放',
+                                classname:'btn-xs btn btn-danger btn-ajax',
+                                url:'artist_demand/leave?demand_id={row.demand_id}',
+                                confirm:'是否确认释放?',
+                                success:function(){
+                                    $('.btn-refresh').trigger('click');
+                                }
+                            }
+                        ]}
                     ]
                 ]
             });

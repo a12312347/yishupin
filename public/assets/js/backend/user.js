@@ -7,7 +7,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 extend: {
                     index_url: 'user/index' + location.search,
                     add_url: 'user/add',
-                    edit_url: 'user/edit',
+                    //edit_url: 'user/edit',
                     del_url: 'user/del',
                     multi_url: 'user/multi',
                     table: 'user',

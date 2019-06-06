@@ -26,6 +26,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {checkbox: true},
                         {field: 'tx_id', title: __('Tx_id')},
                         {field: 'artist_id', title: __('Artist_id')},
+                        {field: 'account', title: __('Account')},
+                        {field: 'type', title: __('Type'), searchList: {"10":__('Type 10'),"20":__('Type 20')}, formatter: Table.api.formatter.status},
                         {field: 'tx_price', title: __('Tx_price'), operate:'BETWEEN'},
                         {field: 'sj_price', title: __('Sj_price'), operate:'BETWEEN'},
                         {field: 'status', title: __('Status'), searchList: {"10":__('Status 10'),"20":__('Status 20'),"30":__('Status 30')}, formatter: Table.api.formatter.status},

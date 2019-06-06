@@ -10,5 +10,9 @@ return [
     'Status 20'     => '已通过',
     'Status 30'     => '已拒绝',
     'Artist.name'   => '艺术家名称',
-    'Artist.avatar' => '艺术家头像'
+    'Artist.avatar' => '艺术家头像',
+    'Account'=>'收款账号',
+    'Type'=>'打款方式',
+    'Type 10'=>'支付宝',
+    'Type 20'=>'银行卡'
 ];

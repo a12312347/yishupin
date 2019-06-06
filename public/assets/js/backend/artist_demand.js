@@ -37,6 +37,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 name:'show_introduce',
                                 text:'查看需求',
                                 title:'查看需求',
+                                extend:'data-area=\'["80%","80%"]\'',
                                 classname:'btn-xs btn btn-primary btn-dialog',
                                 url:'artist_demand/show_introduce?demand_id={row.demand_id}'
                             },
@@ -60,6 +61,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             Table.api.bindevent(table);
         },
         add: function () {
+            Controller.api.bindevent();
+        },
+        show_introduce: function () {
             Controller.api.bindevent();
         },
         edit: function () {

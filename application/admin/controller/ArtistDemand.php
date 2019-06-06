@@ -122,4 +122,29 @@ class ArtistDemand extends Backend
             }
         }
     }
+
+
+    /*
+     * 释放
+     *
+     * */
+    public function leave(){
+        if($this->request->isAjax()){
+            $params=$this->request->request();
+            if(empty($this->admin['artist_id'])){
+                Session::clear();
+                return $this->error('该账号没有艺术家分后台管理权限!请重新登录!');
+            }
+            $demand=$this->model->get(['demand_id'=>$params['demand_id']]);
+            if(empty($demand['artist_id'])){
+                return $this->error('该需求你没有权限释放!');
+            }
+            $res=$this->model->where(['demand_id'=>$params['demand_id']])->update(['artist_id'=>0]);
+            if($res){
+                return $this->success('释放成功!');
+            }else{
+                return $this->error('释放失败!');
+            }
+        }
+    }
 }

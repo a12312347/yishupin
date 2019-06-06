@@ -3,7 +3,7 @@
 namespace app\admin\controller;
 
 use app\common\controller\Backend;
-
+use think\Session;
 /**
  * 需求管理
  *
@@ -17,10 +17,13 @@ class ArtistMyDemand extends Backend
      * @var \app\common\model\ArtistMyDemand
      */
     protected $model = null;
+    protected $admin=null;
+    protected $noNeedRight=['*'];
 
     public function _initialize()
     {
         parent::_initialize();
+        $this->admin=Session::get('admin');
         $this->model = new \app\common\model\ArtistMyDemand;
 
     }
@@ -51,12 +54,14 @@ class ArtistMyDemand extends Backend
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
             $total = $this->model
                     ->with(['user'])
+                ->where(['artist_id'=>$this->admin['artist_id']])
                     ->where($where)
                     ->order($sort, $order)
                     ->count();
 
             $list = $this->model
                     ->with(['user'])
+                ->where(['artist_id'=>$this->admin['artist_id']])
                     ->where($where)
                     ->order($sort, $order)
                     ->limit($offset, $limit)

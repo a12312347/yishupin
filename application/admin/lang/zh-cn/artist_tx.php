@@ -8,5 +8,9 @@ return [
     'Status'    => '状态',
     'Status 10' => '待审核',
     'Status 20' => '已通过',
-    'Status 30' => '已拒绝'
+    'Status 30' => '已拒绝',
+    'Account'=>'收款账号',
+    'Type'=>'打款方式',
+    'Type 10'=>'支付宝',
+    'Type 20'=>'银行卡'
 ];

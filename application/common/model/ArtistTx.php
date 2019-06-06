@@ -25,9 +25,21 @@ class ArtistTx extends Model
 
     // 追加属性
     protected $append = [
-        'status_text'
+        'status_text',
+        'type_text'
     ];
-    
+
+
+    public function getTypeList(){
+        return ['10' => __('Type 10'), '20' => __('Type 20')];
+    }
+
+    public function getTypeTextAttr($value, $data)
+    {
+        $value = $value ? $value : (isset($data['type']) ? $data['type'] : '');
+        $list = $this->getTypeList();
+        return isset($list[$value]) ? $list[$value] : '';
+    }
 
     
     public function getStatusList()
