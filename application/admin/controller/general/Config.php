@@ -257,4 +257,44 @@ class Config extends Backend
         return $this->view->fetch();
     }
 
+    /*
+     * 网站信息设置
+     *
+     * */
+    public function systemset(){
+        $row=$this->model->getGroupData('systemset');
+
+        if(empty($row)){
+            return $this->error('系统不存在!请联系开发解决!');
+        }
+
+        if($this->request->post()){
+            $params=$this->request->post('row/a');
+
+            Db::startTrans();
+            try{
+                foreach($params as $k=>$v){
+                    Db::table('fa_config')->where(['name'=>$k])->update(['value'=>$v]);
+                }
+                Db::commit();
+                $res=1;
+            }catch(\Exception $e){
+                Db::rollback();
+                $errcode=$e->getMessage();
+                $res=0;
+            }
+            if($res==1){
+                return $this->success('操作成功!');
+            }else{
+                return $this->error('操作失败!errcode:'.$errcode);
+            }
+
+
+
+        }
+
+        $this->view->assign('row',$row);
+        return $this->view->fetch();
+    }
+
 }

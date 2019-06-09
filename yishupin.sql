@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-06-06 23:01:43
+Date: 2019-06-09 22:13:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -61,7 +61,7 @@ CREATE TABLE `fa_admin` (
 -- ----------------------------
 -- Records of fa_admin
 -- ----------------------------
-INSERT INTO `fa_admin` VALUES ('1', 'admin', 'Admin', '68fcb8553802d86f466e62ec05e0950a', 'af1816', '/assets/img/avatar.png', 'admin@admin.com', '0', '1559831364', '1492186163', '1559832579', '', 'normal', null);
+INSERT INTO `fa_admin` VALUES ('1', 'admin', 'Admin', '68fcb8553802d86f466e62ec05e0950a', 'af1816', '/assets/img/avatar.png', 'admin@admin.com', '0', '1560081447', '1492186163', '1560081447', '26bebac4-05f1-4d41-9af8-f7917feeaf11', 'normal', null);
 INSERT INTO `fa_admin` VALUES ('9', 'lincheng', 'lincheng', 'af38e61a08720fe55674d3cfd2b9c09e', 'g8KMT2', '/assets/img/avatar.png', 'lincheng@qq.com', '0', '1559830339', '1559802309', '1559832835', '', 'normal', '2');
 INSERT INTO `fa_admin` VALUES ('10', 'zhangqiufen', 'zhangqiufen', 'f4361e34beb0f6159d42a9d33b39f1a9', 'lmjch4', '/assets/img/avatar.png', 'zhangqiufen@qq.com', '0', null, '1559802319', '1559802319', '', 'normal', '1');
 INSERT INTO `fa_admin` VALUES ('13', 'admin666', 'admin666', 'd80aea9ff2c842c4baa90c9a3e4ed3e6', 'srPAqX', '/assets/img/avatar.png', 'admin666@qq.com', '0', '1559832587', '1559832577', '1559832587', '1ac159a5-a103-46e9-ab4b-94cb36dfe30d', 'normal', null);
@@ -82,7 +82,7 @@ CREATE TABLE `fa_admin_log` (
   `createtime` int(10) DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`id`),
   KEY `name` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=1295 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=1297 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员日志表';
 
 -- ----------------------------
 -- Records of fa_admin_log
@@ -1381,6 +1381,8 @@ INSERT INTO `fa_admin_log` VALUES ('1291', '9', 'lincheng', '/admin/type/index',
 INSERT INTO `fa_admin_log` VALUES ('1292', '9', 'lincheng', '/admin/type/index', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"pid\":\"0\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559832764');
 INSERT INTO `fa_admin_log` VALUES ('1293', '9', 'lincheng', '/admin/type/index', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"pid\":\"0\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559832765');
 INSERT INTO `fa_admin_log` VALUES ('1294', '9', 'lincheng', '/admin/type/index', '', '{\"q_word\":[\"\"],\"pageNumber\":\"1\",\"pageSize\":\"10\",\"andOr\":\"AND\",\"orderBy\":[[\"name\",\"ASC\"]],\"searchTable\":\"tbl\",\"showField\":\"name\",\"keyField\":\"id\",\"searchField\":[\"name\"],\"name\":\"\",\"custom\":{\"pid\":\"0\"}}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1559832767');
+INSERT INTO `fa_admin_log` VALUES ('1295', '1', 'admin', '/admin/index/login.html', '登录', '{\"__token__\":\"ffff5597614cef6b801a1355380273be\",\"username\":\"admin\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1560057331');
+INSERT INTO `fa_admin_log` VALUES ('1296', '1', 'admin', '/admin/index/login.html', '登录', '{\"__token__\":\"83d8cef699d83c8c3a32c546a5883665\",\"username\":\"admin\"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '1560081447');
 
 -- ----------------------------
 -- Table structure for `fa_area`
@@ -1401,7 +1403,7 @@ CREATE TABLE `fa_area` (
   `lat` varchar(100) DEFAULT NULL COMMENT '纬度',
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3750 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='地区表';
+) ENGINE=InnoDB AUTO_INCREMENT=3749 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='地区表';
 
 -- ----------------------------
 -- Records of fa_area
@@ -5206,7 +5208,7 @@ CREATE TABLE `fa_artist` (
   `wallet` decimal(10,2) NOT NULL COMMENT '钱包',
   `createtime` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`artist_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='艺术家表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='艺术家表';
 
 -- ----------------------------
 -- Records of fa_artist
@@ -6021,12 +6023,14 @@ CREATE TABLE `fa_user` (
   `createtime` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `mobile` (`mobile`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of fa_user
 -- ----------------------------
 INSERT INTO `fa_user` VALUES ('1', '/uploads/20190604/6aef9eb39d62df20a4dac1230694817b.jpg', '14780114469', 'fe11657374e7b8013b915ea56cf9de93', 'rh8g', '2019-06-04 17:07:11');
+INSERT INTO `fa_user` VALUES ('2', '/assets/img/avatar.png', '17628657632', '76b88836455cc7593cc66a5f1924d8de', 'ylok', '2019-06-09 20:14:50');
+INSERT INTO `fa_user` VALUES ('3', '/assets/img/avatar.png', '12312312312', 'dbe881f342f765882fa4a6de27ea16a3', '9end', '2019-06-09 20:31:10');
 
 -- ----------------------------
 -- Table structure for `fa_user_token`
